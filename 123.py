@@ -880,38 +880,215 @@
 
 #task -2 simulating a simple inventory  
 
-class Product:
+# class Product:
 
-    def __init__(self, id, name, price, quantity):
-        self.id = id
-        self.name = name
-        self.price = price
-        self.quantity = quantity
+#     def __init__(self, id, name, price, quantity):
+#         self.id = id
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
 
-    def total_value(self):
-        return self.price * self.quantity
+#     def total_value(self):
+#         return self.price * self.quantity
 
 
-data = [
-    (1, "Laptop", 50000, 2),
-    (2, "Mouse", 500, 5),
-    (3, "Keyboard", 1200, 3)
-]
+# data = [
+#     (1, "Laptop", 50000, 2),
+#     (2, "Mouse", 500, 5),
+#     (3, "Keyboard", 1200, 3)
+# ]
 
-products = []
+# products = []
 
-for i in data:
-    p = Product(i[0], i[1], i[2], i[3])
-    products.append(p)
+# for i in data:
+#     p = Product(i[0], i[1], i[2], i[3])
+#     products.append(p)
 
-grand_total = 0
+# grand_total = 0
 
-for p in products:
-    print("ID:", p.id)
-    print("Name:", p.name)
-    print("Total Value:", p.total_value())
-    print()
+# for p in products:
+#     print("ID:", p.id)
+#     print("Name:", p.name)
+#     print("Total Value:", p.total_value())
+#     print()
 
-    grand_total = grand_total + p.total_value()
+#     grand_total = grand_total + p.total_value()
 
-print("Total Inventory Value =", grand_total)
+# print("Total Inventory Value =", grand_total)
+
+
+
+#23/6/26
+
+#Task- Class Methods and Static Methods
+
+
+# class Employee:
+#     company = "KRM Corp"      # class variable
+#     _count = 0                # protected class variable
+
+#     def __init__(self, name, dept):
+#         self.name = name
+#         self.dept = dept
+#         Employee._count += 1
+
+#     @classmethod
+#     def get_count(cls):
+#         return f"{cls.company} has {cls._count} employees"
+
+#     @staticmethod
+#     def validate_dept(dept):
+#         valid = ["CSE", "ECE", "MBA", "MCA"]
+#         return dept in valid
+
+# e1 = Employee("Alice", "CSE")
+# e2 = Employee("Bob", "ECE")
+
+# print(Employee.get_count())
+
+# print(Employee.validate_dept("CSE"))
+
+
+
+
+#Task- Secure student record
+
+# class Student:
+#     count = 0
+
+#     def __init__(self, roll_no, marks, grade):
+#         self.__roll_no = roll_no
+#         self._grade = grade
+#         self.marks = marks
+#         Student.count += 1
+
+#     @property
+#     def gpa(self):
+#         avg = sum(self.__marks) / len(self.__marks)
+#         return avg / 10
+
+#     @property
+#     def marks(self):
+#         return self.__marks
+
+#     @marks.setter
+#     def marks(self, value):
+#         for m in value:
+#             if m < 0 or m > 100:
+#                 raise ValueError("Marks must be between 0 and 100")
+#         self.__marks = value
+
+#     @classmethod
+#     def count_students(cls):
+#         return cls.count
+
+
+# s1 = Student(1, [80, 90, 85], "A")
+# s2 = Student(2, [70, 75, 80], "B")
+
+# print("Student 1 GPA:", s1.gpa)
+# print("Student 2 GPA:", s2.gpa)
+# print("Total Students:", Student.count_students())
+
+
+
+
+#Task- Library book manager
+
+# class Book:
+
+#     def __init__(self, isbn, title, author, copies):
+#         self.__isbn = isbn         
+#         self._title = title         
+#         self._author = author       
+#         self.__copies = copies      
+
+#     @property
+#     def available(self):
+#         return self.__copies
+
+#     def checkout(self, n):
+#         if n > self.__copies:
+#             raise ValueError("Not enough copies available")
+#         self.__copies -= n
+
+#     def return_book(self, n):
+#         if n <= 0:
+#             raise ValueError("Invalid number of books")
+#         self.__copies += n
+
+
+# b1 = Book("97812345", "Python Basics", "Rahul Sharma", 10)
+
+# print("Available Copies:", b1.available)
+
+# b1.checkout(3)
+# print("After Checkout:", b1.available)
+
+# b1.return_book(2)
+# print("After Return:", b1.available)
+
+
+
+#task- ATM machine simulator
+
+class Account:
+
+    def __init__(self, owner, pin, balance):
+        self._owner = owner          # protected
+        self.__pin = pin             # private
+        self.__balance = balance     # private
+        self.__login = False
+
+    def authenticate(self, pin):
+        if pin == self.__pin:
+            self.__login = True
+            print("Login Successful")
+        else:
+            print("Wrong PIN")
+
+    @property
+    def balance(self):
+        return self.__balance
+
+    def deposit(self, amount):
+        if self.__login:
+            self.__balance = self.__balance + amount
+            print("Amount Deposited")
+        else:
+            print("Please login first")
+
+    def withdraw(self, amount):
+        if self.__login:
+
+            if amount > 20000:
+                print("Maximum withdrawal is 20000")
+                return
+
+            if amount > self.__balance:
+                print("Insufficient Balance")
+                return
+
+            self.__balance = self.__balance - amount
+            print("Amount Withdrawn")
+
+        else:
+            print("Please login first")
+
+    def mini_statement(self):
+        if self.__login:
+            print("Owner :", self._owner)
+            print("Balance :", self.__balance)
+        else:
+            print("Please login first")
+
+a1 = Account("Vats", 1234, 50000)
+
+a1.authenticate(1234)
+
+a1.deposit(5000)
+a1.withdraw(10000)
+
+print("Current Balance:", a1.balance)
+
+a1.mini_statement()
