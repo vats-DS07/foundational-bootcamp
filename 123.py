@@ -951,7 +951,7 @@
 
 
 
-#Task- Secure student record
+# Task- Secure student record
 
 # class Student:
 #     count = 0
@@ -993,7 +993,7 @@
 
 
 
-#Task- Library book manager
+# Task- Library book manager
 
 # class Book:
 
@@ -1030,65 +1030,372 @@
 
 
 
-#task- ATM machine simulator
+# task- ATM machine simulator
 
-class Account:
+# class Account:
 
-    def __init__(self, owner, pin, balance):
-        self._owner = owner          # protected
-        self.__pin = pin             # private
-        self.__balance = balance     # private
-        self.__login = False
+#     def __init__(self, owner, pin, balance):
+#         self._owner = owner          # protected
+#         self.__pin = pin             # private
+#         self.__balance = balance     # private
+#         self.__login = False
 
-    def authenticate(self, pin):
-        if pin == self.__pin:
-            self.__login = True
-            print("Login Successful")
-        else:
-            print("Wrong PIN")
+#     def authenticate(self, pin):
+#         if pin == self.__pin:
+#             self.__login = True
+#             print("Login Successful")
+#         else:
+#             print("Wrong PIN")
 
-    @property
-    def balance(self):
-        return self.__balance
+#     @property
+#     def balance(self):
+#         return self.__balance
 
-    def deposit(self, amount):
-        if self.__login:
-            self.__balance = self.__balance + amount
-            print("Amount Deposited")
-        else:
-            print("Please login first")
+#     def deposit(self, amount):
+#         if self.__login:
+#             self.__balance = self.__balance + amount
+#             print("Amount Deposited")
+#         else:
+#             print("Please login first")
 
-    def withdraw(self, amount):
-        if self.__login:
+#     def withdraw(self, amount):
+#         if self.__login:
 
-            if amount > 20000:
-                print("Maximum withdrawal is 20000")
-                return
+#             if amount > 20000:
+#                 print("Maximum withdrawal is 20000")
+#                 return
 
-            if amount > self.__balance:
-                print("Insufficient Balance")
-                return
+#             if amount > self.__balance:
+#                 print("Insufficient Balance")
+#                 return
 
-            self.__balance = self.__balance - amount
-            print("Amount Withdrawn")
+#             self.__balance = self.__balance - amount
+#             print("Amount Withdrawn")
 
-        else:
-            print("Please login first")
+#         else:
+#             print("Please login first")
 
-    def mini_statement(self):
-        if self.__login:
-            print("Owner :", self._owner)
-            print("Balance :", self.__balance)
-        else:
-            print("Please login first")
+#     def mini_statement(self):
+#         if self.__login:
+#             print("Owner :", self._owner)
+#             print("Balance :", self.__balance)
+#         else:
+#             print("Please login first")
 
-a1 = Account("Vats", 1234, 50000)
+# a1 = Account("Vats", 1234, 50000)
 
-a1.authenticate(1234)
+# a1.authenticate(1234)
 
-a1.deposit(5000)
-a1.withdraw(10000)
+# a1.deposit(5000)
+# a1.withdraw(10000)
 
-print("Current Balance:", a1.balance)
+# print("Current Balance:", a1.balance)
 
-a1.mini_statement()
+# a1.mini_statement()
+
+
+#class rough work
+
+# class Animal:  
+
+#     def eat(self):
+#         print("Eating")
+
+# class cat(Animal):
+
+#     def meow(self):
+#         print("meowwwwww")
+
+
+# class A:
+
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#         print("A Constructor")
+
+#     def display(self):
+#         print("Name:", self.name)
+#         print("Age:", self.age)
+
+
+# class B(A):
+
+#     def __init__(self, name, age, city):
+#         super().__init__(name, age)
+#         self.city = city
+#         print("B Constructor")
+
+#     def show(self):
+#         print("City:", self.city)
+
+
+# class C(B):
+
+#     def __init__(self, name, age, city, country):
+#         super().__init__(name, age, city)
+#         self.country = country
+#         print("C Constructor")
+
+#     def details(self):
+#         print("Country:", self.country)
+
+
+# obj = C("Rahul", 20, "Delhi", "India")
+
+# obj.display()
+# obj.show()
+# obj.details()
+
+
+
+# Base Class
+# class Animal:
+#     def __init__(self):
+#         print("Animal Constructor Called")
+
+#     def eat(self):
+#         print("Animal can eat")
+
+
+# # Derived Class
+# class Dog(Animal):
+#     def __init__(self):
+#         super().__init__()
+#         print("Dog Constructor Called")
+
+#     def bark(self):
+#         print("Dog can bark")
+
+
+# # Grandchild Class
+# class Puppy(Dog):
+#     def __init__(self):
+#         super().__init__()
+#         print("Puppy Constructor Called")
+
+#     def play(self):
+#         print("Puppy loves to play")
+# class dog(animal):
+
+# # Creating object of Grandchild
+# p = Puppy()
+
+# print()
+
+# p.eat()
+# p.bark()
+# p.play()
+
+
+# class animal:
+
+
+
+
+#29/6/26
+
+#task-1 shape hierarchy with ABC
+from abc import ABC, abstractmethod
+import math
+
+class Shape(ABC):
+    count = 0
+
+    def __init__(self):
+        Shape.count += 1
+
+    @abstractmethod
+    def area(self):
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+    def describe(self):
+        print(type(self).__name__)
+        print("Area =", self.area())
+        print("Perimeter =", self.perimeter())
+        print()
+
+    @classmethod
+    def total_shapes(cls):
+        return cls.count
+
+
+class Circle(Shape):
+    def __init__(self, r):
+        super().__init__()
+        self.r = r
+
+    def area(self):
+        return 3.14 * self.r * self.r
+
+    def perimeter(self):
+        return 2 * 3.14 * self.r
+
+
+class Rectangle(Shape):
+    def __init__(self, l, b):
+        super().__init__()
+        self.l = l
+        self.b = b
+
+    def area(self):
+        return self.l * self.b
+
+    def perimeter(self):
+        return 2 * (self.l + self.b)
+
+
+class Triangle(Shape):
+    def __init__(self, a, b, c):
+        super().__init__()
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+
+    def area(self):
+        s = self.perimeter() / 2
+        return math.sqrt(s * (s-self.a) * (s-self.b) * (s-self.c))
+
+
+def print_report(shapes_list):
+    for i in shapes_list:
+        i.describe()
+
+
+c = Circle(5)
+r = Rectangle(4,6)
+t = Triangle(3,4,5)
+
+lst = [c,r,t]
+
+print_report(lst)
+
+print("Total Shapes =", Shape.total_shapes())
+
+
+
+#task-2 Vehicle fleet system
+# class Vehicle:
+#     total = 0
+
+#     def __init__(self, name, km):
+#         self.name = name
+#         self.km = km
+#         Vehicle.total += 1
+
+#     def fuel_cost(self):
+#         return 0
+
+
+# class Car(Vehicle):
+#     def __init__(self, name, km):
+#         super().__init__(name, km)
+
+#     def fuel_cost(self):
+#         return self.km * 8
+
+
+# class Truck(Vehicle):
+#     def __init__(self, name, km):
+#         super().__init__(name, km)
+
+#     def fuel_cost(self):
+#         return self.km * 15
+
+
+# class Motorcycle(Vehicle):
+#     def __init__(self, name, km):
+#         super().__init__(name, km)
+
+#     def fuel_cost(self):
+#         return self.km * 3
+
+
+# class ElectricCar(Car):
+#     def __init__(self, name, km):
+#         super().__init__(name, km)
+
+#     def fuel_cost(self):
+#         return 0
+
+
+# def fleet_report(lst):
+#     for i in lst:
+#         print(i.name)
+#         print("Fuel Cost =", i.fuel_cost())
+
+#         if isinstance(i, ElectricCar):
+#             print("This is an Electric Car")
+
+#         print()
+
+
+# c = Car("Honda City",100)
+# t = Truck("Ashok Leyland",100)
+# b = Motorcycle("Splendor",100)
+# e = ElectricCar("Tesla",100)
+
+# vehicles = [c,t,b,e]
+
+# fleet_report(vehicles)
+
+# print("Total Vehicles =", Vehicle.total)
+
+
+
+
+# #task-3 multi role staff system
+# class Person:
+#     def __init__(self, name):
+#         self.name = name
+
+
+# class Employee(Person):
+#     def __init__(self, name, empid):
+#         super().__init__(name)
+#         self.empid = empid
+
+
+# class Teacher(Employee):
+#     def __init__(self, name, empid, subjects):
+#         super().__init__(name, empid)
+#         self.subjects = subjects
+
+#     def teach(self):
+#         print(self.name, "is teaching", self.subjects)
+
+
+# class AdminStaff(Employee):
+#     def __init__(self, name, empid, designation):
+#         super().__init__(name, empid)
+#         self.designation = designation
+
+#     def admin_task(self):
+#         print(self.name, "is doing admin work as", self.designation)
+
+
+# class TeacherAdmin(Teacher, AdminStaff):
+#     def __init__(self, name, empid, subjects, designation):
+#         Employee.__init__(self, name, empid)
+#         self.subjects = subjects
+#         self.designation = designation  
+
+
+# print(TeacherAdmin.__mro__)
+
+# obj = TeacherAdmin(
+#     "Rahul",
+#     101,
+#     ["Python", "DSA"],
+#     "HOD"
+# )
+
+# obj.teach()
+# obj.admin_task()
